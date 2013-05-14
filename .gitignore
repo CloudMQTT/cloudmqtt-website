@@ -1,0 +1,4 @@
+output/
+.sass-cache/
+*.swp
+aws.yml
