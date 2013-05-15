@@ -9,6 +9,8 @@ end
 
 desc 'Render all haml files and copy public files to output'
 task :render => :clean do
+  FileUtils.cp_r 'public/.', 'output'
+
   haml_options = { :format => :html5 }
   haml_layout = File.read('views/layout.haml')
   layout = Haml::Engine.new(haml_layout, haml_options)
@@ -24,11 +26,10 @@ task :render => :clean do
     File.open("output/#{name}.html", 'w+') {|o| o.write html}
   end
 
-  engine = Sass::Engine.new(File.read('./sass/flat-ui.sass'))
+  engine = Sass::Engine.new(File.read('./sass/flat-ui.sass'), 
+                            load_paths: ['./sass'])
   css = engine.render
-  File.open("output/flat-ui.css", 'w+') {|o| o.write css}
-
-  FileUtils.cp_r 'public/.', 'output'
+  File.open("output/css/flat-ui.css", 'w+') {|o| o.write css}
 end
 
 class ViewCtx
