@@ -1,7 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    aws-sdk (1.9.5)
+    aws-sdk (1.10.0)
       json (~> 1.4)
       nokogiri (>= 1.4.4)
       uuidtools (~> 2.1)
@@ -14,6 +14,7 @@ GEM
     rack-protection (1.5.0)
       rack
     rake (10.0.4)
+    redcarpet (2.2.2)
     sass (3.2.9)
     sinatra (1.4.2)
       rack (~> 1.5, >= 1.5.2)
@@ -30,5 +31,6 @@ DEPENDENCIES
   haml
   mime-types
   rake
+  redcarpet
   sass
   sinatra

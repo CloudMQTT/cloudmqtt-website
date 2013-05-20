@@ -2,6 +2,7 @@
 require 'sinatra'
 require 'haml'
 require 'sass'
+require 'redcarpet'
 
 set :haml, :format => :html5
 before do
