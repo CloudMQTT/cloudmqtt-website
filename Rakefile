@@ -1,5 +1,6 @@
 require 'haml'
 require 'sass'
+require 'redcarpet'
 require 'aws'
 require 'mime/types'
 
@@ -35,12 +36,18 @@ end
 class ViewCtx
   def initialize(opts)
     @opts = opts
+    @markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, :autolink => true, :space_after_headers => true)
   end
 
   def haml(view_sym, opts)
     haml_view = File.read("views/#{view_sym}.haml")
     engine = Haml::Engine.new(haml_view, @opts.merge(opts))
     engine.to_html(ViewCtx.new(@opts), opts[:locals])
+  end
+
+  def markdown(view_sym, opts)
+    view = File.read("views/#{view_sym}.md")
+    @markdown.render(view)
   end
 end
 

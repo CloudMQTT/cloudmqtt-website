@@ -59,12 +59,16 @@ A MQTT server can be installed for use in a local development  environment.  Typ
   </tr>
   <tr>
     <td>Ubuntu Linux</td>
-    <td style="text-align: left"><code>
-    curl http://repo.mosquitto.org/debian/mosquitto-repo.gpg.key | sudo apt-key add -
-    curl http://repo.mosquitto.org/debian/mosquitto-repo.list > /etc/apt/sources.list.d/mosquitto-repo.list
-    apt-get update
-    apt-get install mosquitto
-    </code></td>
+    <td style="text-align: left">
+    <pre>
+    <code>
+curl http://repo.mosquitto.org/debian/mosquitto-repo.gpg.key | sudo apt-key add -
+curl http://repo.mosquitto.org/debian/mosquitto-repo.list > /etc/apt/sources.list.d/mosquitto-repo.list
+apt-get update
+apt-get install mosquitto
+    </code>
+    </pre>
+    </td>
   </tr>
   <tr>
     <td>Windows</td>
