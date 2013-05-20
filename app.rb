@@ -14,7 +14,6 @@ end
 
 get '/css/flat-ui.css' do
   content_type :css
-  puts '******SASSS'
   sass :'../sass/flat-ui'
 end
 
