@@ -1,5 +1,3 @@
-## Using with Ruby
-
 Currently the most mature client library for Ruby is the synchronous [ruby-mqtt](https://github.com/njh/ruby-mqtt), the async [em-mqtt](https://github.com/njh/ruby-em-mqtt) as yet to support user/password before it's usable with CloudMQTT. 
 
 First you need to add ```mqtt``` as a dependency to your ```Gemfile``` and execute  ```bundle install```. In the following code snippet you can see you how can publish and subscribe. Note that the client is synchronous so you have to use threads if you want to subscribe and do other things at the same time.

@@ -1,15 +1,16 @@
+-@title = "Documentation"
 .container
   !=haml :'_docs-nav', layout: false, locals: { name: name }
   .row
     .span8
-      %h2 CloudMQTT Documentation
       %p
-        Get started with CloudAMQP with any of these guides: 
-        %ul
-          -{ heroku: 'Heroku', ruby: 'Ruby', python: 'Python',
-             nodejs: 'Node.js', java: 'Java', }.each do |k,v|
-            %li
-              %a{href: "/docs-#{k}.html"}=v
+        Get started with CloudMQTT with any of these guides: 
+      %ul
+        -{ heroku: 'Heroku', ruby: 'Ruby', python: 'Python',
+           nodejs: 'Node.js', java: 'Java', }.each do |k,v|
+          %li
+            %a{href: "/docs-#{k}.html"}=v
+      %p
         Don't hesitate to contact us at 
         %a{href: 'mailto:support@cloudmqtt.com'} support@cloudmqtt.com 
         if you got any questions!

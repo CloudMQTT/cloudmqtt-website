@@ -1,5 +1,3 @@
-## Using with Node.js
-
 A good javascript MQTT library is [MQTT.js](https://github.com/adamvr/MQTT.js). Add ```mqtt``` to your ```package.json``` file. Then a simple example could look like this:
 
 ```javascript

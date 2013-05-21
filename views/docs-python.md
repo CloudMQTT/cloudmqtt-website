@@ -1,5 +1,3 @@
-## Using with Python
-
 The most feature complete MQTT client for Python is [Mosquitto](http://mosquitto.org/documentation/python/). Below you see an sample app which both publish and subscribes to CloudMQTT.
 
 ```python

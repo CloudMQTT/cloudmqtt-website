@@ -1,7 +1,13 @@
 !!!
 %html{:lang => "en"}
   %head
-    %title CloudMQTT - A globally distributed MQTT broker
+    %title 
+      -if @title
+        =@title
+        \-
+      CloudMQTT
+      -if name == 'index'
+        \- A globally distributed MQTT broker
     %link{:href => "/css/bootstrap.min.css", :rel => "stylesheet"}/
     %link(href='http://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css')
     %link{:href => "/favicon.ico", :rel => "shortcut icon"}/
@@ -42,6 +48,7 @@
             %a{:href => "/docs.html"} Documentation
         %h3
           CloudMQTT
+          %small=@title
     !=yield
     %footer
       .container
