@@ -36,7 +36,15 @@ end
 class ViewCtx
   def initialize(opts)
     @opts = opts
-    @markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, :autolink => true, :space_after_headers => true)
+
+    rnder = Redcarpet::Render::HTML.new(prettify: true)
+    @markdown = Redcarpet::Markdown.new(rnder, {
+      :autolink => true,
+      :space_after_headers => true,
+      :no_intra_emphasis => true,
+      :fenced_code_blocks => true,
+      :space_after_headers => true
+    })
   end
 
   def haml(view_sym, opts)

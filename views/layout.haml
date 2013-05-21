@@ -3,14 +3,22 @@
   %head
     %title CloudMQTT - Globally distributed MQTT broker
     %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
-    / Loading Bootstrap
-    %link{:href => "/css/bootstrap.css", :rel => "stylesheet"}/
-    / Loading Flat UI
-    %link{:href => "/css/flat-ui.css", :rel => "stylesheet"}/
+    %link{:href => "/css/bootstrap.min.css", :rel => "stylesheet"}/
+    -#%link{:href => "/css/bootstrap-responsive.min.css", :rel => "stylesheet"}/
+    %link(href='http://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css')
     %link{:href => "/favicon.ico", :rel => "shortcut icon"}/
     / HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file.
     /[if lt IE 9]
-      <script src="/js/html5shiv.js"></script>
+      %script(src="/js/html5shiv.js")
+    :css
+      body { 
+        font-family: 'Lato', serif; 
+      }
+      footer {
+        background-color: #EEE;
+        margin-top: 1em;
+        padding: 1em 0 0;
+      }
   %body
     :javascript
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -21,35 +29,33 @@
       ga('create', 'UA-40908590-1', 'cloudmqtt.com');
       ga('send', 'pageview');
 
-    .navbar.navbar-static-top.navbar-inverse
-      .navbar-inner
-        .container
-          .pull-right
-            %ul.nav
-              %li 
-                %a{href: @dev ? 'http://localhost:9393/customer' : 'https://customer.cloudamqp.com/'} Control panel
-          %a.brand{:href => "/"} 
-            CloudMQTT
-          %ul.nav
-            %li{class: name == 'plans' ? 'active' : ''}
-              %a{:href => "/plans.html"} Plans
-            %li{class: name =~ /^docs/ ? 'active' : ''}
-              %a{:href => "/docs.html"} Documentation
-            %li{class: name == 'support' ? 'active' : ''}
-              %a{:href => "/support.html"} Support
+    .container
+      -#.pull-right
+        %ul.nav
+          %li 
+            %a{href: @dev ? 'http://localhost:9393/customer' : 'https://customer.cloudamqp.com/'} Control panel
+      .page-header
+        %ul.nav.nav-pills.pull-right
+          %li{class: name == 'index' ? 'active' : ''}
+            %a{:href => "/"} Home
+          %li{class: name == 'plans' ? 'active' : ''}
+            %a{:href => "/plans.html"} Plans
+          %li{class: name =~ /^docs/ ? 'active' : ''}
+            %a{:href => "/docs.html"} Documentation
+          %li{class: name == 'support' ? 'active' : ''}
+            %a{:href => "/support.html"} Support
+        %h3
+          CloudMQTT
     !=yield
     %footer
       .container
         .row
           .span3
-            %br/
-            .well
-              %a{href: 'http://aws.amazon.com', target: '_blank'}
-                %img{src: '/images/aws_48.png'}
+            %a{href: 'http://aws.amazon.com', target: '_blank'}
+              %img{src: '/images/aws_48.png'}
           .offset5.span4
             .footer-banner
-              %h3.footer-title Legal
-              %ul
+              %ul.nav
                 %li
                   %a{href: '/terms_of_service.html'} Terms of service
                 %li
@@ -58,17 +64,3 @@
                   %a{href: '/privacy_policy.html'} Privacy policy
                 %li
                   %a{href: '/imprint.html'} Imprint
-    / Load JS here for greater good =============================
-    %script{:src => "/js/jquery-1.8.2.min.js"}
-    %script{:src => "/js/jquery-ui-1.10.0.custom.min.js"}
-    %script{:src => "/js/jquery.dropkick-1.0.0.js"}
-    %script{:src => "/js/custom_checkbox_and_radio.js"}
-    %script{:src => "/js/custom_radio.js"}
-    %script{:src => "/js/jquery.tagsinput.js"}
-    %script{:src => "/js/bootstrap-tooltip.js"}
-    %script{:src => "/js/jquery.placeholder.js"}
-    %script{:src => "http://vjs.zencdn.net/c/video.js"}
-    %script{:src => "/js/application.js"}
-    /[if lt IE 8]
-      <script src="/js/icon-font-ie7.js"></script>
-      <script src="/js/icon-font-ie7-24.js"></script>

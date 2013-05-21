@@ -1,0 +1,9 @@
+.container
+  !=haml :'_docs-nav', layout: false, locals: { name: name }
+  .row
+    .span8
+      ~markdown :'docs-python'
+    .span4
+      %a{href: 'http://www.python.org', target: '_blank'}
+        %img{src: '/images/python.svg', alt: 'Python logo'}
+

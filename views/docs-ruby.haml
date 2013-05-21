@@ -1,0 +1,8 @@
+.container
+  !=haml :'_docs-nav', layout: false, locals: { name: name }
+  .row
+    .span8
+      ~markdown :'docs-ruby'
+    .span4
+      %a{href: 'http://www.ruby-lang.org', target: '_blank'}
+        %img{src: '/images/ruby.svg', alt: 'Ruby logo', style: 'width: 100%'}

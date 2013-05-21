@@ -1,0 +1,9 @@
+.container
+  !=haml :'_docs-nav', layout: false, locals: { name: name }
+  .row
+    .span8
+      ~markdown :'docs-java'
+    .span4
+      %a{href: 'http://www.java.com', target: '_blank'}
+        %img{src: '/images/java.svg', alt: 'Java logo'}
+

@@ -1,0 +1,10 @@
+%br/
+%ul.nav.nav-tabs
+  %li{class: name == "docs" ? 'active' : ''}
+    %a{href: "/docs.html"} Home
+  -{heroku: 'Heroku', 
+    ruby: 'Ruby', python: 'Python', nodejs: 'Node.js', java: 'Java', 
+    }.each do |k,v|
+    %li{class: name == "docs-#{k}" ? 'active' : ''}
+      %a{href: "/docs-#{k}.html"}=v
+%script(src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?lang=ruby")

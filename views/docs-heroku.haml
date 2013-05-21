@@ -1,0 +1,80 @@
+.container
+  !=haml :'_docs-nav', layout: false, locals: { name: name }
+  .row
+    .span8
+      %h2 Use from Heroku
+
+      %h3 Provisioning the add-on
+
+      %p CloudMQTT can be attached to a Heroku application via the CLI:
+
+      %pre
+        %code.prettyprint.language-bash
+          :preserve
+            $ heroku addons:add cloudmqtt
+            -----> Adding cloudmqtt to sharp-mountain-4005... done, v18 (free)
+
+      %p 
+        Once CloudMQTT has been added a 
+        %code CLOUDMQTT_URL 
+        setting will be available in the app configuration and will contain the canonical URL used to access the newly provisioned CloudMQTT service instance. This can be confirmed using the 
+        %code heroku config:get
+        command.
+
+      %pre
+        %code.prettyprint.language-bash
+          :preserve
+            $ heroku config:get CLOUDMQTT_URL
+            mqtt://user:pass@broker.cloudmqtt.com
+
+      %p After installing CloudMQTT the application should be configured to fully integrate with the add-on.
+
+      %h3 Dashboard
+
+      %p The CloudMQTT dashboard allows you to monitor your current connection and message traffic statistics.
+
+      %p The dashboard can be accessed via the CLI:
+
+      %pre
+        %code.prettyprint.language-bash
+          :preserve
+            $ heroku addons:open cloudmqtt
+            Opening cloudmqtt for sharp-mountain-4005...
+
+      %p 
+        or by visiting the 
+        %a{href: 'http://heroku.com/myapps'} Heroku apps web interface
+        and selecting the application in question. Select CloudMQTT from the Add-ons menu.
+
+      %h3 Migrating between plans
+
+      %p All plan migrations are completely transparent and instantaneous. 
+
+      %p 
+        Use the 
+        %code heroku addons:upgrade
+        command to migrate to a new plan.
+
+      %pre
+        %code.prettyprint.language-bash
+          :preserve
+            $ heroku addons:upgrade cloudmqtt:newplan
+            -----> Upgrading cloudmqtt:newplan to sharp-mountain-4005... done, v18 ($49/mo)
+            Your plan has been updated to: cloudmqtt:newplan
+
+      %h3 Removing the add-on
+
+      %p CloudMQTT can be removed via the  CLI.
+
+      .alert.alert-warning
+        This will destroy all associated data and cannot be undone!
+
+      %pre
+        %code.prettyprint.language-bash
+          :preserve
+            $ heroku addons:remove cloudmqtt
+            -----> Removing cloudmqtt from sharp-mountain-4005... done, v20 (free)
+
+    .span4
+      %a{href: 'http://www.heroku.com', target: '_blank'}
+        %img{src: '/images/heroku-logo-light-300x100.png', alt: 'Heroku logo'}
