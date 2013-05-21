@@ -59,16 +59,14 @@ A MQTT server can be installed for use in a local development  environment.  Typ
   </tr>
   <tr>
     <td>Ubuntu Linux</td>
-    <td style="text-align: left">
-    <pre>
-    <code>
-curl http://repo.mosquitto.org/debian/mosquitto-repo.gpg.key | sudo apt-key add -
-curl http://repo.mosquitto.org/debian/mosquitto-repo.list > /etc/apt/sources.list.d/mosquitto-repo.list
+    <td style="text-align: left"><pre><code>
+curl http://repo.mosquitto.org/debian/mosquitto-repo.gpg.key | \
+ apt-key add -
+curl http://repo.mosquitto.org/debian/mosquitto-repo.list > \
+ /etc/apt/sources.list.d/mosquitto-repo.list
 apt-get update
 apt-get install mosquitto
-    </code>
-    </pre>
-    </td>
+</code></pre></td>
   </tr>
   <tr>
     <td>Windows</td>
@@ -76,7 +74,7 @@ apt-get install mosquitto
   </tr>
   <tr>
     <td>Other</td>
-    <td style="text-align: left"><a href="http://mosquitto.org/download/">Mosquitto download page</td>
+    <td style="text-align: left"><a href="http://mosquitto.org/download/">Mosquitto download page</a></td>
   </tr>
 </table>
 
@@ -122,7 +120,7 @@ Full sample code can be found here: [github.com/CloudMQTT/ruby-mqtt-example](htt
 
 Worth noting is that the client does not yet support other QoS levels than 0, ie. no publish acknowledge or redelivery.
 
-## Node.js
+## Using with Node.js
 
 A good javascript MQTT library is [MQTT.js](https://github.com/adamvr/MQTT.js). Add ```mqtt``` to your ```package.json``` file. Then a simple example could look like this:
 
@@ -212,24 +210,9 @@ The most feature complete MQTT client for Python is [Mosquitto](http://mosquitto
 
 The full code can be seen at [github.com/CloudMQTT/python-mqtt-example](https://github.com/CloudMQTT/python-mqtt-example).
 
-## Java
+## Using with Java
 
-http://eclipse.org/paho/
-
-http://mobilave.info/blog/2012/Quick_start_guide_for_the_Paho_MQTT_Java_Client.html
-
-## Monitoring & Logging
-
-Stats and the current state of CloudMQTT can be displayed via the CLI.
-
-    :::term
-    $ heroku cloudmqtt:command
-    example output
-
-CloudMQTT activity can be observed within the Heroku log-stream by [[describe add-on logging recognition, if any]].
-
-    :::term
-    $ heroku logs -t | grep 'cloudmqtt pattern'
+The by far best MQTT client for Java/JVM is [Paho](http://eclipse.org/paho/). Please email [support@cloudmqtt.com](mailto:support@cloudmqtt.com) if you need help to get started. 
 
 ## Dashboard
 
@@ -239,7 +222,7 @@ The dashboard can be accessed via the CLI:
 
     :::term
     $ heroku addons:open cloudmqtt
-    Opening cloudmqtt for sharp-mountain-4005…
+    Opening cloudmqtt for sharp-mountain-4005...
 
 or by visiting the [Heroku apps web interface](http://heroku.com/myapps) and selecting the application in question. Select CloudMQTT from the Add-ons menu.
 
@@ -267,4 +250,5 @@ CloudMQTT can be removed via the  CLI.
 ## Support
 
 All CloudMQTT support and runtime issues should be submitted on of the [Heroku Support channels](support-channels). Any non-support related issues or product feedback is welcome at [support@cloudmqtt.com](mailto:support@cloudmqtt.com).
+
 
