@@ -1,5 +1,4 @@
 require 'haml'
-require 'sass'
 require 'redcarpet'
 require 'aws'
 require 'mime/types'
@@ -26,11 +25,6 @@ task :render => :clean do
     end
     File.open("output/#{name}.html", 'w+') {|o| o.write html}
   end
-
-  engine = Sass::Engine.new(File.read('./sass/flat-ui.sass'), 
-                            load_paths: ['./sass'])
-  css = engine.render
-  File.open("output/css/flat-ui.css", 'w+') {|o| o.write css}
 end
 
 class ViewCtx
@@ -53,7 +47,7 @@ class ViewCtx
     engine.to_html(ViewCtx.new(@opts), opts[:locals])
   end
 
-  def markdown(view_sym, opts)
+  def markdown(view_sym)
     view = File.read("views/#{view_sym}.md")
     @markdown.render(view)
   end
