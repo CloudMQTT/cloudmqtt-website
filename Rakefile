@@ -72,6 +72,7 @@ task :upload => :render do
       md5 = Digest::MD5.file(f).to_s
       if not obj.etag[1..-2] == md5
         ct = MIME::Types.of(f).first
+        ct = "text/html;charset=utf-8" if ct == "text/html"
         puts "Updating: #{f} Content-type: #{ct}"
         objects[f.sub(/output\//,'')].write(:file => f, :content_type => ct)
       else
