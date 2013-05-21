@@ -1,4 +1,3 @@
-%br/
 %ul.nav.nav-tabs
   %li{class: name == "docs" ? 'active' : ''}
     %a{href: "/docs.html"} Home
@@ -7,4 +6,8 @@
     }.each do |k,v|
     %li{class: name == "docs-#{k}" ? 'active' : ''}
       %a{href: "/docs-#{k}.html"}=v
-%script(src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?lang=ruby")
+
+%link(href="/prettify/prettify.css" type="text/css" rel="stylesheet")
+%script(src="/prettify/prettify.js" type="text/javascript")
+:javascript
+  window.onload = prettyPrint
