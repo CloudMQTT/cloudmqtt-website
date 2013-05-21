@@ -1,0 +1,55 @@
+:css
+  .plans {
+    margin-left: -20px;
+    list-style: none;
+  }
+  .plans h4 {
+    text-align: center;
+  }
+  .plan {
+    background-color: #f9f9f9;
+    border: solid 1px #eee;
+    padding: .5em;
+    border-radius: 5px;
+  }
+  .price {
+    font-weight: bold;
+    text-align: right;
+  }
+  
+.container
+  %ul.plans
+    %li.span3
+      %img{src: '/images/animals/cat.png', alt: 'Cat'}
+      %h4 Cute Cat
+      %ul
+        %li 10 connections
+        %li 10 MB transfer
+      .price
+        Free
+    %li.span3
+      %img{src: '/images/animals/koala.png', alt: 'Koala'}
+      %h4 Kewl Koala
+      %ul
+        %li 100 connections
+        %li 100 MB transfer
+      .price
+        $19/month
+    %li.span3
+      %img{src: '/images/animals/leopard.png', alt: 'Leopard'}
+      %h4 Leaping Leopard
+      %ul
+        %li 1000 connections
+        %li 1000 MB transfer
+      .price
+        $99/month
+    %li.span3
+      %img{src: '/images/animals/pug.png', alt: 'Pug'}
+      %h4 Power Pug
+      %ul
+        %li 10 000 connections
+        %li 100 GB transfer
+      .price
+        $499/month
+
+
