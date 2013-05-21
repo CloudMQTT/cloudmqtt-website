@@ -16,7 +16,7 @@ task :render => :clean do
   layout = Haml::Engine.new(haml_layout, haml_options)
   Dir['views/*.haml'].each do |f|
     name = File.basename(f, '.haml')
-    next if name == 'layout'
+    next if name == 'layout' or name.start_with? '_'
 
     haml_view = File.read(f)
     view = Haml::Engine.new(haml_view, haml_options)

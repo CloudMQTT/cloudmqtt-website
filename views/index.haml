@@ -1,13 +1,59 @@
+:css
+  #hero {
+    background-repeat: no-repeat;
+    background-color: rgb(0, 136, 204);
+    color: white;
+    margin: -2.5em 0 2.5em;
+    background-image: url(/images/windmill.jpg);
+    background-position: 45% 50%;
+    background-size: cover;
+    padding: 10em 0 10em;
+  }
+  #hero h1 {
+    font-size: 700%;
+  }
+  #hero small {
+    color: white
+  }
+  #benefits img {
+    display: block;
+    margin: auto;
+    width: 128px;
+    height: 128px;
+  }
+  #benefits p {
+    text-align: justify;
+  }
+  #hero svg path {
+    fill: white;
+  }
+  #hero svg {
+    width: 128px;
+    height: 128px;
+  }
+#hero
+  .container
+    .row
+      .offset1.span2.text-right
+        %svg(version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32"  xml:space="preserve")
+          %path(id="cloud" fill-rule="evenodd" clip-rule="evenodd" fill="#333333" d="M25.914,13.143C25.477,8.58,21.678,5,17,5 c-3.619,0-6.717,2.148-8.146,5.23C8.424,10.094,7.976,10,7.501,10c-2.485,0-4.5,2.016-4.5,4.5c0,0.494,0.099,0.961,0.246,1.404 c-1.933,1.127-3.246,3.195-3.246,5.594c0,3.59,2.91,6.5,6.5,6.5V28H24.5v-0.002c4.143,0,7.5-3.357,7.5-7.5 C32,16.842,29.379,13.805,25.914,13.143z M24.5,25.998V26H6.501c-2.481-0.002-4.5-2.02-4.5-4.502c0-1.6,0.843-3.045,2.254-3.867 c1.371-0.787,1.465-0.943,0.89-2.357c-0.097-0.291-0.144-0.544-0.144-0.773c0-1.379,1.121-2.5,2.5-2.5c0,0,0.656-0.047,1.353,0.23 c1.147,0.457,1.272,0.02,1.814-1.159C11.815,8.599,14.3,7,17,7c3.6,0,6.576,2.723,6.924,6.334c0.123,1.432,0.123,1.432,1.615,1.773 C28.125,15.601,30,17.869,30,20.498C30,23.531,27.533,25.998,24.5,25.998z")
+      .span9
+        %h1
+          CloudMQTT
+          %br/
+          %small A globally distributed MQTT broker
+
 .container
-  .demo-headline
-    %img.pull-left{src: '/images/animals/pug.png'}
-    %h1.demo-logo
-      CloudMQTT
-      %small Globally distributed MQTT broker
-  .row
-    .span6
-      %h3 Machine-to-machine messaging
+  .row#benefits
+    .span4
+      %img{src: '/images/phone.svg', alt: 'Cloud'}
+      %h4 Machine-to-machine messaging
       %p MQTT is the machine-to-machine protocol of the future. It's minimal design makes it perfect for built-in systems, mobile phones and other memory and bandwidth sensitive applications.
-
-
-
+    .span4
+      %img{src: '/images/paperplane.svg', alt: 'Paperplane'}
+      %h4 Lightweight pub/sub protocol
+      %p MQTT is a very lightweight messaging protocol, created with embedded systems, sensors and mobile applications in mind.
+    .span4
+      %img{src: '/images/truck.svg', alt: 'Truck'}
+      %h4 Reliable messaing
+      %p MQTT has very strong delivery guarantees. There are three modes; fire-and-forget, at-least-one and exactly-once. CloudMQTT supports them all.
