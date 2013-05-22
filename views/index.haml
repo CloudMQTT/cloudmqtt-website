@@ -24,3 +24,27 @@
       %img{src: '/images/truck.svg', alt: 'Truck'}
       %h4 Reliable messaging
       %p MQTT has very strong delivery guarantees. There are three modes; fire-and-forget, at-least-one and exactly-once. CloudMQTT supports them all.
+%script(src="/js/jquery-2.0.0.min.js" type="text/javascript")
+:javascript
+  $(function() {
+    var hero = $("#hero");
+    var yMax = calcYMax(hero);
+    $(window).resize(function() {
+      yMax = calcYMax(hero);
+    });
+    $(window).scroll(function() {
+      var yPos = -($(this).scrollTop() / 2);
+      if (yMax <= yPos && yPos <= 0) {
+        var coords = '50% '+ yPos + 'px';
+        hero.css({ backgroundPosition: coords });
+      }
+    }); 
+  });
+
+  const ratio = 0.659745763;
+  function calcYMax(hero) {
+    var w = hero.width();
+    var h = hero.outerHeight();
+    var currentRatio = h / w;
+    return (currentRatio / ratio - 1) * h;
+  }
