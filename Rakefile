@@ -2,6 +2,7 @@ require 'haml'
 require 'redcarpet'
 require 'aws'
 require 'mime/types'
+require 'fileutils'
 
 task :start do
   exec 'ruby app.rb'
@@ -61,8 +62,24 @@ task :clean do
   FileUtils.mkdir_p 'output'
 end
 
+task :gzip => :render do
+  files = Dir['output/**/*'].select{ |f| File.file? f }
+  files.each do |f|
+    ct = MIME::Types.of(f).first.to_s
+    next unless ct =~ /^text|javascript$/
+    Zlib::GzipWriter.open("#{f}.gz") do |gz|
+      gz.write IO.binread(f)
+    end
+    size = File.size f
+    gzip_size = File.size "#{f}.gz"
+    puts "Compressing: #{f} saving #{(size - gzip_size)/1024} KB"
+    FileUtils.rm f
+    FileUtils.mv "#{f}.gz", f
+  end
+end
+
 desc 'Sync output with S3 bucket'
-task :upload => :render do
+task :upload => :gzip do
   s3 = AWS::S3.new(YAML.load(File.read('aws.yml')))
   objects = s3.buckets['www.cloudmqtt.com'].objects
   files = Dir['output/**/*'].select{ |f| File.file? f }
@@ -71,23 +88,27 @@ task :upload => :render do
     if f = files.find {|fn| fn == "output/#{obj.key}" }
       md5 = Digest::MD5.file(f).to_s
       if not obj.etag[1..-2] == md5
-        ct = MIME::Types.of(f).first
+        ct = MIME::Types.of(f).first.to_s
         ct = "text/html;charset=utf-8" if ct == "text/html"
-        puts "Updating: #{f} Content-type: #{ct}"
-        objects[f.sub(/output\//,'')].write(:file => f, :content_type => ct)
+        ce = 'gzip' if ct =~ /^text|javascript$/
+        puts "Updating: #{f} Content-type: #{ct} Content-encoding: #{ce}"
+        objects[f.sub(/output\//,'')].write(:file => f, :content_type => ct, content_encoding: ce)
       else
         puts "Not changed: #{f}"
       end
       files.delete f
     else
       obj.delete
-      puts "deleted: #{obj.key}"
+      puts "Deleting: #{obj.key}"
     end
   end
 
   files.each do |f|
-    ct = MIME::Types.of(f).first
-    puts "Uploading: #{f} Content-type: #{ct}"
-    objects[f.sub(/output\//,'')].write(:file => f, :content_type => ct)
+    ct = MIME::Types.of(f).first.to_s
+    ct += ";charset=utf-8" if ct == "text/html"
+    puts "Uploading: #{f} Content-type: #{ct} Content-encoding: #{ce}"
+
+    ce = 'gzip' if ct =~ /^text|javascript$/
+    objects[f.sub(/output\//,'')].write(:file => f, :content_type => ct, content_encoding: ce)
   end
 end
