@@ -3,6 +3,7 @@ require 'redcarpet'
 require 'aws'
 require 'mime/types'
 require 'fileutils'
+require 'securerandom'
 
 task :start do
   exec 'ruby app.rb'
@@ -82,10 +83,13 @@ end
 
 desc 'Sync output with S3 bucket'
 task :upload => :gzip do
-  s3 = AWS::S3.new(YAML.load(File.read('aws.yml')))
+  AWS.config YAML.load(File.read('aws.yml'))
+
+  s3 = AWS::S3.new
   objects = s3.buckets['www.cloudmqtt.com'].objects
   files = Dir['output/**/*'].select{ |f| File.file? f }
 
+  changed = []
   objects.each do |obj|
     if f = files.find {|fn| fn == "output/#{obj.key}" }
       md5 = Digest::MD5.file(f).to_s
@@ -95,6 +99,7 @@ task :upload => :gzip do
         ce = 'deflate' if ct =~ /^text|javascript$/
         puts "Updating: #{f} Content-type: #{ct} Content-encoding: #{ce}"
         objects[f.sub(/output\//,'')].write(:file => f, :content_type => ct, content_encoding: ce)
+        changed << obj.key
       else
         puts "Not changed: #{f}"
       end
@@ -103,6 +108,21 @@ task :upload => :gzip do
       obj.delete
       puts "Deleting: #{obj.key}"
     end
+  end
+
+  if changed.length > 0
+    cf = AWS::CloudFront.new
+    resp = cf.client.create_invalidation({
+      distribution_id: 'E1GY9WL1URNZDH',
+      invalidation_batch: {
+        paths: {
+          quantity: changed.length,
+          items: changed.map { |c| { path: c } },
+        },
+        caller_reference: SecureRandom.uuid,
+      }
+    })
+    puts "Invalidating items in CloudFront: #{resp}"
   end
 
   files.each do |f|
