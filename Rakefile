@@ -27,7 +27,9 @@ task :render => :clean do
     html = layout.to_html(ctx, {name: name}) do
       inner
     end
-    File.open("output/#{name}.html", 'w+') {|o| o.write html}
+    outf = "output/#{name}.html"
+    File.open(outf, 'w+') {|o| o.write html}
+    File.utime(File.atime(outf), File.mtime(f), outf)
   end
 end
 
@@ -71,11 +73,7 @@ task :gzip => :render do
     next unless ct =~ /^text|javascript$|xml$/
 
     Zlib::GzipWriter.open("#{f}.gz") do |gz|
-      org = f
-      org = f.sub(/^output/, 'views').sub(/html$/, 'haml') if f =~ /html$/
-      mtime = File.mtime org
-      puts "#{org} mtime #{mtime}"
-      gz.mtime = mtime
+      gz.mtime = File.mtime f
       gz.write IO.binread(f)
     end
     size = File.size f
