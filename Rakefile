@@ -68,14 +68,15 @@ task :gzip => :render do
   files.each do |f|
     ct = MIME::Types.of(f).first.to_s
     next unless ct =~ /^text|javascript$/
-    Zlib::GzipWriter.open("#{f}.gz") do |gz|
-      gz.write IO.binread(f)
-    end
+
     size = File.size f
-    gzip_size = File.size "#{f}.gz"
+    deflate = Zlib::Deflate.deflate File.read(f), Zlib::BEST_COMPRESSION
+    File.open f, 'w+' do |io|
+      io.write deflate
+      io.truncate(io.pos)
+    end
+    gzip_size = File.size f
     puts "Compressing: #{f} saving #{(size - gzip_size)/1024} KB"
-    FileUtils.rm f
-    FileUtils.mv "#{f}.gz", f
   end
 end
 
@@ -91,7 +92,7 @@ task :upload => :gzip do
       if not obj.etag[1..-2] == md5
         ct = MIME::Types.of(f).first.to_s
         ct = "text/html;charset=utf-8" if ct == "text/html"
-        ce = 'gzip' if ct =~ /^text|javascript$/
+        ce = 'deflate' if ct =~ /^text|javascript$/
         puts "Updating: #{f} Content-type: #{ct} Content-encoding: #{ce}"
         objects[f.sub(/output\//,'')].write(:file => f, :content_type => ct, content_encoding: ce)
       else
@@ -107,9 +108,8 @@ task :upload => :gzip do
   files.each do |f|
     ct = MIME::Types.of(f).first.to_s
     ct += ";charset=utf-8" if ct == "text/html"
+    ce = 'deflate' if ct =~ /^text|javascript$/
     puts "Uploading: #{f} Content-type: #{ct} Content-encoding: #{ce}"
-
-    ce = 'gzip' if ct =~ /^text|javascript$/
     objects[f.sub(/output\//,'')].write(:file => f, :content_type => ct, content_encoding: ce)
   end
 end
