@@ -1,13 +1,9 @@
-%ul.nav.nav-tabs
-  %li{class: name == "docs" ? 'active' : ''}
-    %a{href: "/docs.html"} Home
-  -{heroku: 'Heroku', 
-    ruby: 'Ruby', python: 'Python', nodejs: 'Node.js', java: 'Java', 
-    }.each do |k,v|
-    %li{class: name == "docs-#{k}" ? 'active' : ''}
-      %a{href: "/docs-#{k}.html"}=v
-
-%link(href="/prettify/prettify.css" type="text/css" rel="stylesheet")
-%script(src="/prettify/prettify.js" type="text/javascript")
-:javascript
-  window.onload = prettyPrint
+.container
+  %ul.nav.nav-tabs
+    %li{class: name == "docs" ? 'active' : ''}
+      %a{href: "/docs.html"} Home
+    -{heroku: 'Heroku', 
+      ruby: 'Ruby', python: 'Python', nodejs: 'Node.js', java: 'Java', 
+      }.each do |k,v|
+      %li{class: name == "docs-#{k}" ? 'active' : ''}
+        %a{href: "/docs-#{k}.html"}=v
