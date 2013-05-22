@@ -11,7 +11,7 @@ end
 
 desc 'Render all haml files and copy public files to output'
 task :render => :clean do
-  FileUtils.cp_r 'public/.', 'output'
+  FileUtils.cp_r 'public/.', 'output', preserve: true
 
   haml_options = { format: :html5, ugly: true }
   haml_layout = File.read('views/layout.haml')
@@ -71,7 +71,11 @@ task :gzip => :render do
     next unless ct =~ /^text|javascript$|xml$/
 
     Zlib::GzipWriter.open("#{f}.gz") do |gz|
-      gz.mtime = File.mtime(f).to_i
+      org = f
+      org = f.sub(/^output/, 'views').sub(/html$/, 'haml') if f =~ /html$/
+      mtime = File.mtime org
+      puts "#{org} mtime #{mtime}"
+      gz.mtime = mtime
       gz.write IO.binread(f)
     end
     size = File.size f
