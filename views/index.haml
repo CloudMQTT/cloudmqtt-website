@@ -28,24 +28,10 @@
 :javascript
   $(function() {
     var hero = $("#hero");
-    var yMax = calcYMax(hero);
-    $(window).resize(function() {
-      yMax = calcYMax(hero);
-    });
+    var doc = $(document);
     $(window).scroll(function() {
-      var yPos = 50 - ($(this).scrollTop() / 0.5) / document.height * 100;
-      //console.log($(this).scrollTop(), document.height, yPos);
-      //if (yMax <= yPos && yPos <= 0) {
-        var coords = '50% '+ yPos + '%';
-        hero.css({ backgroundPosition: coords });
-      //}
+      var yPos = 50 - ($(this).scrollTop() / 0.5) / doc.height() * 100;
+      var coords = '50% '+ yPos + '%';
+      hero.css({ backgroundPosition: coords });
     }); 
   });
-
-  const ratio = 0.659745763;
-  function calcYMax(hero) {
-    var w = hero.width();
-    var h = hero.outerHeight();
-    var currentRatio = h / w;
-    return (currentRatio / ratio - 1) * h;
-  }
