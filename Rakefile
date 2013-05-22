@@ -99,7 +99,7 @@ task :upload => :gzip do
         ce = 'deflate' if ct =~ /^text|javascript$/
         puts "Updating: #{f} Content-type: #{ct} Content-encoding: #{ce}"
         objects[f.sub(/output\//,'')].write(:file => f, :content_type => ct, content_encoding: ce)
-        changed << obj.key
+        changed << "/#{obj.key}"
       else
         puts "Not changed: #{f}"
       end
@@ -116,13 +116,13 @@ task :upload => :gzip do
       distribution_id: 'E1GY9WL1URNZDH',
       invalidation_batch: {
         paths: {
+          items: changed,
           quantity: changed.length,
-          items: changed.map { |c| { path: c } },
         },
         caller_reference: SecureRandom.uuid,
       }
     })
-    puts "Invalidating items in CloudFront: #{resp}"
+    puts "Invalidating items in CloudFront: #{resp.data}"
   end
 
   files.each do |f|
