@@ -13,7 +13,7 @@ desc 'Render all haml files and copy public files to output'
 task :render => :clean do
   FileUtils.cp_r 'public/.', 'output'
 
-  haml_options = { :format => :html5 }
+  haml_options = { format: :html5, ugly: true }
   haml_layout = File.read('views/layout.haml')
   layout = Haml::Engine.new(haml_layout, haml_options)
   Dir['views/*.haml'].each do |f|
@@ -70,14 +70,15 @@ task :gzip => :render do
     ct = MIME::Types.of(f).first.to_s
     next unless ct =~ /^text|javascript$|xml$/
 
-    size = File.size f
-    deflate = Zlib::Deflate.deflate File.read(f), Zlib::BEST_COMPRESSION
-    File.open f, 'w+' do |io|
-      io.write deflate
-      io.truncate(io.pos)
+    Zlib::GzipWriter.open("#{f}.gz") do |gz|
+      gz.mtime = File.mtime(f).to_i
+      gz.write IO.binread(f)
     end
-    gzip_size = File.size f
+    size = File.size f
+    gzip_size = File.size "#{f}.gz"
     puts "Compressing: #{f} saving #{(size - gzip_size)/1024} KB"
+    FileUtils.rm f
+    FileUtils.mv "#{f}.gz", f
   end
 end
 
@@ -96,7 +97,7 @@ task :upload => :gzip do
       if not obj.etag[1..-2] == md5
         ct = MIME::Types.of(f).first.to_s
         ct = "text/html;charset=utf-8" if ct == "text/html"
-        ce = 'deflate' if ct =~ /^text|javascript$|xml$/
+        ce = 'gzip' if ct =~ /^text|javascript$|xml$/
         puts "Updating: #{f} Content-type: #{ct} Content-encoding: #{ce}"
         objects[f.sub(/output\//,'')].write(:file => f, :content_type => ct, content_encoding: ce)
         changed << "/#{obj.key}"
@@ -128,7 +129,7 @@ task :upload => :gzip do
   files.each do |f|
     ct = MIME::Types.of(f).first.to_s
     ct += ";charset=utf-8" if ct == "text/html"
-    ce = 'deflate' if ct =~ /^text|javascript$|xml$/
+    ce = 'gzip' if ct =~ /^text|javascript$|xml$/
     puts "Uploading: #{f} Content-type: #{ct} Content-encoding: #{ce}"
     objects[f.sub(/output\//,'')].write(:file => f, :content_type => ct, content_encoding: ce)
   end
