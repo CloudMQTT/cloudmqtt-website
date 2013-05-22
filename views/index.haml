@@ -33,11 +33,12 @@
       yMax = calcYMax(hero);
     });
     $(window).scroll(function() {
-      var yPos = -($(this).scrollTop() / 2);
-      if (yMax <= yPos && yPos <= 0) {
-        var coords = '50% '+ yPos + 'px';
+      var yPos = 50 - ($(this).scrollTop() / 0.5) / document.height * 100;
+      //console.log($(this).scrollTop(), document.height, yPos);
+      //if (yMax <= yPos && yPos <= 0) {
+        var coords = '50% '+ yPos + '%';
         hero.css({ backgroundPosition: coords });
-      }
+      //}
     }); 
   });
 
