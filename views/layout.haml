@@ -16,19 +16,21 @@
       body { 
         font-family: 'Lato', sans-serif; 
       }
+      nav, section, article, footer {
+        background: #FFF;
+        padding: 1em 0;
+      }
       footer {
         background-color: #EEE;
-        margin-top: 1em;
-        padding: 1em 0 1em;
+      }
+      #bg {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: -1;
       }
       #hero {
-        background-repeat: no-repeat;
-        background-color: rgb(0, 136, 204);
-        margin: -2.5em 0 2.5em;
-        background-image: url(/images/windmill.jpg);
-        background-position: 50% 50%;
-        background-size: cover;
-        padding: 10em 0 10em;
+        padding: 10em 0;
       }
       #hero h1 {
         font-size: 700%;
@@ -63,6 +65,12 @@
         font-weight: bold;
         text-align: right;
       }
+      nav#main-menu {
+        padding: 0;
+      }
+      #main-menu .page-header {
+        margin-bottom: 0;
+      }
     -if name =~ /^docs/
       %link(href="/prettify/prettify.css" type="text/css" rel="stylesheet")
       %script(src="/prettify/prettify.js" type="text/javascript")
@@ -78,24 +86,25 @@
       ga('create', 'UA-40908590-1', 'cloudmqtt.com');
       ga('send', 'pageview');
 
-    .container
-      -#.pull-right
-        %ul.nav
-          %li 
-            %a{href: @dev ? 'http://localhost:9393/customer' : 'https://customer.cloudamqp.com/'} Control panel
-      .page-header
-        %ul.nav.nav-pills.pull-right
-          %li{class: name == 'index' ? 'active' : ''}
-            %a{:href => "/"} Home
-          %li{class: name == 'plans' ? 'active' : ''}
-            %a{:href => "/plans.html"} Plans
-          %li{class: name =~ /^docs/ ? 'active' : ''}
-            %a{:href => "/docs.html"} Documentation
-          %li{class: name == 'support' ? 'active' : ''}
-            %a{:href => "/support.html"} Support
-        %h3
-          CloudMQTT
-          %small=@title
+    %nav#main-menu
+      .container
+        -#.pull-right
+          %ul.nav
+            %li 
+              %a{href: @dev ? 'http://localhost:9393/customer' : 'https://customer.cloudamqp.com/'} Control panel
+        .page-header
+          %ul.nav.nav-pills.pull-right
+            %li{class: name == 'index' ? 'active' : ''}
+              %a{:href => "/"} Home
+            %li{class: name == 'plans' ? 'active' : ''}
+              %a{:href => "/plans.html"} Plans
+            %li{class: name =~ /^docs/ ? 'active' : ''}
+              %a{:href => "/docs.html"} Documentation
+            %li{class: name == 'support' ? 'active' : ''}
+              %a{:href => "/support.html"} Support
+          %h3
+            CloudMQTT
+            %small=@title
     -if name =~ /^docs/
       !=haml :'_docs-nav', layout: false, locals: { name: name }
     !=yield

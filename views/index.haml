@@ -9,29 +9,30 @@
           CloudMQTT
           %br/
           %small A globally distributed MQTT broker
+%section#benefits
+  .container
+    .row
+      .span4
+        %img{src: '/images/phone.svg', alt: 'Cloud'}
+        %h4 Machine-to-machine messaging
+        %p MQTT is the machine-to-machine protocol of the future. It's minimal design makes it perfect for built-in systems, mobile phones and other memory and bandwidth sensitive applications.
+      .span4
+        %img{src: '/images/paperplane.svg', alt: 'Paperplane'}
+        %h4 Lightweight pub/sub protocol
+        %p MQTT is a very lightweight messaging protocol, created with embedded systems, sensors and mobile applications in mind.
+      .span4
+        %img{src: '/images/truck.svg', alt: 'Truck'}
+        %h4 Reliable messaging
+        %p MQTT has very strong delivery guarantees. There are three modes; fire-and-forget, at-least-one and exactly-once. CloudMQTT supports them all.
 
-.container
-  .row#benefits
-    .span4
-      %img{src: '/images/phone.svg', alt: 'Cloud'}
-      %h4 Machine-to-machine messaging
-      %p MQTT is the machine-to-machine protocol of the future. It's minimal design makes it perfect for built-in systems, mobile phones and other memory and bandwidth sensitive applications.
-    .span4
-      %img{src: '/images/paperplane.svg', alt: 'Paperplane'}
-      %h4 Lightweight pub/sub protocol
-      %p MQTT is a very lightweight messaging protocol, created with embedded systems, sensors and mobile applications in mind.
-    .span4
-      %img{src: '/images/truck.svg', alt: 'Truck'}
-      %h4 Reliable messaging
-      %p MQTT has very strong delivery guarantees. There are three modes; fire-and-forget, at-least-one and exactly-once. CloudMQTT supports them all.
+#bg
+  %img{src: '/images/windmill.jpg', width: '100%', height: '100%'}
 %script(src="/js/jquery-2.0.0.min.js" type="text/javascript")
 :javascript
   $(function() {
-    var hero = $("#hero");
-    var doc = $(document);
+    var hero = $("#bg");
     $(window).scroll(function() {
-      var yPos = 50 - ($(this).scrollTop() / 0.5) / doc.height() * 100;
-      var coords = '50% '+ yPos + '%';
-      hero.css({ backgroundPosition: coords });
+      var yPos = -($(this).scrollTop() / 2);
+      hero.css("transform", "translate3d(0," + yPos + "px,0)");
     }); 
   });
