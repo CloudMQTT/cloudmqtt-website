@@ -52,7 +52,8 @@ class ViewCtx
 
   def markdown(view_sym)
     view = File.read("views/#{view_sym}.md")
-    @markdown.render(view)
+    html = @markdown.render(view)
+    html.gsub(/(\<code class=")/, '\1prettyprint ')
   end
 end
 
